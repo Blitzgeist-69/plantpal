@@ -1,7 +1,9 @@
 asgiref==3.12.1
+dj-database-url==0.5.0
 Django==4.2.30
 gunicorn==23.0.0
 packaging==26.3
+psycopg2==2.9.12
 setuptools==84.0.0
 sqlparse==0.6.0
 tzdata==2026.3
