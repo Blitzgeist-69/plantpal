@@ -361,6 +361,7 @@ PlantPal uses Django’s built-in `User` plus two project models. Care history i
 * Balsamiq - Wireframes and Tables
 * Heroku CLI
 * Python 3.12.10
+* Pylance
 * Django 4.2.3
 * Django authentication (`User`, login / logout views)
 * Postgres (Code Institute `dbs.ci-dbs.net`)
