@@ -49,7 +49,6 @@ class Plant(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
-
     class Meta:
         ordering = ['nickname']
 
@@ -58,3 +57,32 @@ class Plant(models.Model):
 
     def get_absolute_url(self):
         return reverse('plants:plant_detail', args=[self.pk])
+
+
+class CareLog(models.Model):
+    """ A log entry for a plant care activity. """
+
+    ACTION_CHOICES = [
+        ('water', 'Watered'),
+        ('fertilize', 'Fertilized'),
+        ('prune', 'Pruned'),
+        ('repot', 'Repotted'),
+        ('check', 'Health check'),
+        ('other', 'Other'),
+    ]
+
+    plant = models.ForeignKey(
+        Plant,
+        on_delete=models.CASCADE,
+        related_name='care_logs',
+    )
+    date = models.DateField()
+    action = models.CharField(max_length=25, choices=ACTION_CHOICES)
+    notes = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-date', '-created_at']
+
+    def __str__(self):
+        return f'{self.get_action_display()} - {self.plant.nickname} on {self.date}'
