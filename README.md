@@ -370,7 +370,7 @@ PlantPal uses Django’s built-in `User` plus two project models. Care history i
 * WhiteNoise - Static Files
 * HTML5
 * CSS3 - Styles
-* Bootstrap 5 - Layout
+* Bootstrap 5.3.8 - Layout
 * GitHub - Code Repository
 * Heroku - Deployment
 * VS Code - Development
@@ -390,7 +390,7 @@ PlantPal uses Django’s built-in `User` plus two project models. Care history i
 
 ## Code and Media Attribution
 
-* Bootstrap 5.3
+* Bootstrap 5.3.8
 * Font Awesome - icons
 * Google Fonts
 
