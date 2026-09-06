@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}PlantPal{% endblock %}
+{% block title %}PlantPal - keep your houseplants alive{% endblock %}
 
 {% block content %}
-<section class="py-4">
-    <h1>Keep your houseplants alive</h1>
+<section class="py-4 text-center">
+    <h1>Stop guessing when it's time to water your plants</h1>
     <p>
         PlantPal remembers each plant's watering rhythm and care history
-        so you do not have to.
+        and tells you what needs attention today.
     </p>
     <a class="btn btn-success me-2" href="{% url 'register' %}">Create an account</a>
     <a class="btn btn-outline-success" href="{% url 'login' %}">Log in</a>

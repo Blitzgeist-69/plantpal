@@ -3,6 +3,7 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect, render
+from .models import Plant, CareLog
 
 
 def home(request):
@@ -34,3 +35,10 @@ def register(request):
 def dashboard(request):
     """Logged-in home. Plant lists will be added later."""
     return render(request, 'plants/dashboard.html')
+
+
+@login_required
+def plant_list(request):
+    """List of plants for the logged-in user."""
+    plants = Plant.objects.filter(user=request.user).order_by('nickname')
+    return render(request, 'plants/plant_list.html', {'plants': plants})
