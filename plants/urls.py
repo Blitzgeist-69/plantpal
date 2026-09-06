@@ -1,6 +1,8 @@
 from django.urls import path  # import path, similarr to project's urls.py
 from . import views  # import views.py from the current directory
 
+app_name = 'plants'
+
 urlpatterns = [
-    path('', views.index, name='index'),  # define a URL pattern for the index view
+    path('dashboard/', views.dashboard, name='dashboard'),
 ]

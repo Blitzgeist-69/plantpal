@@ -1,8 +1,36 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.contrib import messages
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import redirect, render
 
-# Create your views here.
+
+def home(request):
+    """Public landing page. Logged-in users go to the dashboard."""
+    if request.user.is_authenticated:
+        return redirect('plants:dashboard')
+    return render(request, 'home.html')
 
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the plants index.")
+def register(request):
+    """Create an account, then log the new user in."""
+    if request.user.is_authenticated:
+        return redirect('plants:dashboard')
+
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, 'Welcome to PlantPal.')
+            return redirect('plants:dashboard')
+    else:
+        form = UserCreationForm()
+
+    return render(request, 'registration/register.html', {'form': form})
+
+
+@login_required
+def dashboard(request):
+    """Logged-in home. Plant lists will be added later."""
+    return render(request, 'plants/dashboard.html')

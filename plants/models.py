@@ -85,4 +85,7 @@ class CareLog(models.Model):
         ordering = ['-date', '-created_at']
 
     def __str__(self):
-        return f'{self.get_action_display()} - {self.plant.nickname} on {self.date}'
+        return (
+            f'{self.get_action_display()} - {self.plant.nickname} '
+            f'on {self.date}'
+        )
