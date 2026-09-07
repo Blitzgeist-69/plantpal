@@ -79,3 +79,27 @@ def plant_create(request):
         'plants/plant_form.html',
         {'form': form, 'is_edit': False},
     )
+
+
+@login_required
+def plant_update(request, pk):
+    """ Edit an existing plant for the logged-in user. """
+    plant = get_object_or_404(Plant, pk=pk, user=request.user)
+
+    if request.method == 'POST':
+        form = PlantForm(request.POST, instance=plant)
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request,
+                f'{plant.nickname} has been updated.',
+            )
+            return redirect(plant.get_absolute_url())
+    else:
+        form = PlantForm(instance=plant)
+
+    return render(
+        request,
+        'plants/plant_form.html',
+        {'form': form, 'is_edit': True},
+    )
