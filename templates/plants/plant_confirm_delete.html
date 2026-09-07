@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete {{ plant.nickname }} — PlantPal{% endblock %}
+
+{% block content %}
+<h1>Delete {{ plant.nickname }}</h1>
+<p>
+    This will permanently remove
+    <strong>{{ plant.nickname }}</strong>
+    ({{ plant.species }}) and all of its care history.
+    The cannot be undone.
+</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes, delete</button>
+    <a class="btn btn-outline-secondary" href="{{ plant.get_absolute_url }}">Cancel</a>
+</form>
+{% endblock %}

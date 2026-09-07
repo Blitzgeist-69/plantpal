@@ -103,3 +103,21 @@ def plant_update(request, pk):
         'plants/plant_form.html',
         {'form': form, 'is_edit': True},
     )
+
+
+@login_required
+def plant_delete(request, pk):
+    """ Delete an existing plant for the logged-in user. """
+    plant = get_object_or_404(Plant, pk=pk, user=request.user)
+
+    if request.method == 'POST':
+        nickname = plant.nickname
+        plant.delete()
+        messages.success(request, f'{nickname} has been deleted.')
+        return redirect('plants:plant_list')
+
+    return render(
+        request,
+        'plants/plant_confirm_delete.html',
+        {'plant': plant},
+    )

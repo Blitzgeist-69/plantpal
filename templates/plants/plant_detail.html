@@ -9,8 +9,10 @@
 
 <h1>{{ plant.nickname }}</h1>
 <p>
-    <a class="btn btn-success btn-sm" href="{% url 'plants:plant_update' plant.pk %}">Edit</a>
+    <a class="btn btn-outline-success btn-sm" href="{% url 'plants:plant_update' plant.pk %}">Edit</a>
+    <a class="btn btn-outline-danger btn-sm" href="{% url 'plants:plant_delete' plant.pk %}">Delete</a>
 </p>
+
 <p>{{ plant.species }}</p>
 
 <dl>

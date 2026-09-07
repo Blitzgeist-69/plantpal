@@ -8,5 +8,6 @@ urlpatterns = [
     path('plants/', views.plant_list, name='plant_list'),
     path('plants/add/', views.plant_create, name='plant_create'),
     path('plants/<int:pk>/edit/', views.plant_update, name='plant_update'),
+    path('plants/<int:pk>/delete/', views.plant_delete, name='plant_delete'),
     path('plants/<int:pk>/', views.plant_detail, name='plant_detail'),
 ]
