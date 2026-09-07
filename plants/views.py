@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect, render, get_object_or_404
 from .models import Plant, CareLog
+from .forms import PlantForm
 
 
 def home(request):
@@ -54,3 +55,27 @@ def plant_detail(request, pk):
     care_logs = plant.care_logs.all()
     context = {'plant': plant, 'care_logs': care_logs}
     return render(request, 'plants/plant_detail.html', context)
+
+
+@login_required
+def plant_create(request):
+    """ Add a new plant for the logged-in user. """
+    if request.method == 'POST':
+        form = PlantForm(request.POST)
+        if form.is_valid():
+            plant = form.save(commit=False)
+            plant.user = request.user
+            plant.save()
+            messages.success(
+                request,
+                f'{plant.nickname} has been added to your collection.',
+            )
+            return redirect(plant.get_absolute_url())
+    else:
+        form = PlantForm()
+
+    return render(
+        request,
+        'plants/plant_form.html',
+        {'form': form, 'is_edit': False},
+    )

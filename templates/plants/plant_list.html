@@ -29,5 +29,8 @@
     </div>
 {% else %}
     <p>You don't have any plants yet.</p>
+    <p>
+        <a class="btn btn-success" href="{% url 'plants:plant_create' %}">Add plant</a>
+    </p>
 {% endif %}
 {% endblock %}
