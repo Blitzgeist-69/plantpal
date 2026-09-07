@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ plant.nickname }} — PlantPal{% endblock %}
+
+{% block content %}
+<p>
+    <a href="{% url 'plants:plant_list' %}">Back to My Plants</a>
+</p>
+
+<h1>{{ plant.nickname }}</h1>
+<p>{{ plant.species }}</p>
+
+<dl>
+    {% if plant.location %}
+        <dt>Location</dt>
+        <dd>{{ plant.location }}</dd>
+    {% endif %}
+
+    {% if plant.acquired_date %}
+        <dt>Acquired Date</dt>
+        <dd>{{ plant.acquired_date }}</dd>
+    {% endif %}
+
+    <dt>Water every</dt>
+    <dd>{{ plant.water_frequency_days }} days</dd>
+
+    <dt>Light</dt>
+    <dd>{{ plant.get_light_needs_display }}</dd>
+
+    {% if plant.notes %}
+        <dt>Notes</dt>
+        <dd>{{ plant.notes }}</dd>
+    {% endif %}
+</dl>
+
+<h2>Care history</h2>
+{% if care_logs %}
+    <ul>
+        {% for log in care_logs %}
+            <li>
+                {{ log.date }} — {{ log.get_action_display }}
+                {% if log.notes %}
+                 — {{ log.notes }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No care has been logged for this plant yet.</p>
+{% endif %}
+{% endblock %}

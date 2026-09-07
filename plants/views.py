@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from .models import Plant, CareLog
 
 
@@ -42,3 +42,15 @@ def plant_list(request):
     """List of plants for the logged-in user."""
     plants = Plant.objects.filter(user=request.user).order_by('nickname')
     return render(request, 'plants/plant_list.html', {'plants': plants})
+
+
+@login_required
+def plant_detail(request, pk):
+    """
+    Detail view for a plant belonging to a user. If the plant does not
+    belong to the user, return a 404 error.
+    """
+    plant = get_object_or_404(Plant, pk=pk, user=request.user)
+    care_logs = plant.care_logs.all()
+    context = {'plant': plant, 'care_logs': care_logs}
+    return render(request, 'plants/plant_detail.html', context)
