@@ -9,6 +9,13 @@ from django.utils import timezone
 from django.db.models import Q
 
 
+def get_user_plant(request, pk):
+    """ Helper function to get a plant for the logged-in user,
+    or 404 if not found.
+    """
+    return get_object_or_404(Plant, pk=pk, user=request.user)
+
+
 def home(request):
     """Public landing page. Logged-in users go to the dashboard."""
     if request.user.is_authenticated:
@@ -88,7 +95,7 @@ def plant_detail(request, pk):
     belong to the user, return a 404 error. Show care history and accept a
     new carelog.
     """
-    plant = get_object_or_404(Plant, pk=pk, user=request.user)
+    plant = get_user_plant(request, pk)
 
     if request.method == 'POST':
         form = CareLogForm(request.POST)
@@ -137,7 +144,7 @@ def plant_create(request):
 @login_required
 def plant_update(request, pk):
     """ Edit an existing plant for the logged-in user. """
-    plant = get_object_or_404(Plant, pk=pk, user=request.user)
+    plant = get_user_plant(request, pk)
 
     if request.method == 'POST':
         form = PlantForm(request.POST, instance=plant)
@@ -161,7 +168,7 @@ def plant_update(request, pk):
 @login_required
 def plant_delete(request, pk):
     """ Delete an existing plant for the logged-in user. """
-    plant = get_object_or_404(Plant, pk=pk, user=request.user)
+    plant = get_user_plant(request, pk)
 
     if request.method == 'POST':
         nickname = plant.nickname
