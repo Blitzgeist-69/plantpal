@@ -38,6 +38,29 @@
     {% endif %}
 </dl>
 
+<h2>Log care</h2>
+<form method="post" novalidate>
+    {% csrf_token %}
+
+    {% if care_form.non_field_errors %}
+        <div class="alert alert-danger">{{ care_form.non_field_errors }}</div>
+    {% endif %}
+
+    {% for field in care_form %}
+        <div class="mb-3">
+            <label for="{{ field.id_for_label }}" class="form-label">
+                {{ field.label }}
+            </label>
+            {{ field }}
+            {% if field.errors %}
+                <div class="text-danger">{{ field.errors }}</div>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-success"> Save care log</button>
+</form>
+
 <h2>Care history</h2>
 {% if care_logs %}
     <ul>

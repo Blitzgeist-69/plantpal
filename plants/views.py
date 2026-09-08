@@ -4,7 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect, render, get_object_or_404
 from .models import Plant, CareLog
-from .forms import PlantForm
+from .forms import PlantForm, CareLogForm
+from django.utils import timezone
 
 
 def home(request):
@@ -49,11 +50,28 @@ def plant_list(request):
 def plant_detail(request, pk):
     """
     Detail view for a plant belonging to a user. If the plant does not
-    belong to the user, return a 404 error.
+    belong to the user, return a 404 error. Show care history and accept a
+    new carelog.
     """
     plant = get_object_or_404(Plant, pk=pk, user=request.user)
+
+    if request.method == 'POST':
+        form = CareLogForm(request.POST)
+        if form.is_valid():
+            care_log = form.save(commit=False)
+            care_log.plant = plant
+            care_log.save()
+            messages.success(
+                request,
+                f'Logged {care_log.get_action_display()} for '
+                f'{plant.nickname}.',
+            )
+            return redirect(plant.get_absolute_url())
+    else:
+        form = CareLogForm(initial={'date': timezone.localdate()})
+
     care_logs = plant.care_logs.all()
-    context = {'plant': plant, 'care_logs': care_logs}
+    context = {'plant': plant, 'care_logs': care_logs, 'care_form': form}
     return render(request, 'plants/plant_detail.html', context)
 
 

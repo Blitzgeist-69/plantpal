@@ -37,3 +37,25 @@ class PlantForm(forms.ModelForm):
                 attrs={'class': 'form-control', 'rows': 4}
             ),
         }
+
+
+class CareLogForm(forms.ModelForm):
+    """ Form for creating and updating CareLog instances. """
+
+    date = forms.DateField(
+        widget=forms.DateInput(
+            format='%Y-%m-%d',
+            attrs={'class': 'form-control', 'type': 'date'},
+        ),
+        input_formats=['%Y-%m-%d'],
+    )
+
+    class Meta:
+        model = CareLog
+        fields = ['date', 'action', 'notes']
+        widgets = {
+            'action': forms.Select(attrs={'class': 'form-control'}),
+            'notes': forms.Textarea(
+                attrs={'class': 'form-control', 'rows': 3}
+            ),
+        }
