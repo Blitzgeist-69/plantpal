@@ -13,33 +13,33 @@
 {% else %}
     <h2>Needs Attention</h2>
         {% if needs_attention %}
-            <ul>
+            <ul class="list-group mb-4">
                 {% for plant in needs_attention %}
-                    <li>
+                    <li class="list-group-item">
                         <a href="{{ plant.get_absolute_url }}">{{ plant.nickname }}</a>
                         — {{ plant.species }}
-                        — due {{ plant.due_date }}
+                        — watering due {{ plant.due_date }}
                     </li>
                 {% endfor %}
             </ul>
         {% else %}
-            <p>Nothing due today. Good work!</p>
+            <p>No watering due today. Good work!</p>
         {% endif %}
 
-        <h2>Doing fine</h2>
+        <h2>Doing fine ({{ doing_fine|length }})</h2>
         {% if doing_fine %}
-            <ul>
+            <ul class="list-group">
                 {% for plant in doing_fine %}
-                    <li>
+                    <li class="list-group-item">
                         <a href="{{ plant.get_absolute_url }}">{{ plant.nickname }}</a>
                         — {{ plant.species }}
-                        — next due {{ plant.due_date }}
+                        — next watering {{ plant.due_date }}
                     </li>
                 {% endfor %}
             </ul>
         {% else %}
             <p>No plants in this list.</p>
         {% endif %}
-        
+
 {% endif %}
 {% endblock %}

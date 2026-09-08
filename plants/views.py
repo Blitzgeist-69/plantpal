@@ -35,7 +35,8 @@ def register(request):
 
 @login_required
 def dashboard(request):
-    """ Split user's plants into due/overdue and up to date based
+    """ 
+    Split user's plants into due/overdue and up to date based
     on watering schedule.
     """
     plants = Plant.objects.filter(

@@ -60,18 +60,18 @@ class Plant(models.Model):
     def get_absolute_url(self):
         return reverse('plants:plant_detail', args=[self.pk])
 
-    def last_care_date(self):
-        """Most recent care log date, or None if no logs exist."""
-        latest = self.care_logs.first()
+    def last_watered_date(self):
+        """Most recent Watered log, or None if never watered."""
+        latest = self.care_logs.filter(action='water').first()
         if latest is None:
             return None
         return latest.date
 
     def due_date(self):
         """
-        Date plant care is next due, plants with no history are due today.
+        Date watering is next due or if never watered due today - needs attention.
         """
-        last = self.last_care_date()
+        last = self.last_watered_date()
         if last is None:
             return timezone.localdate()
         return last + timedelta(days=self.water_frequency_days)
