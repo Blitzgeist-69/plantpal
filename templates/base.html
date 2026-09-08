@@ -22,7 +22,7 @@
     </head>
     <body class="d-flex flex-column min-vh-100">
         <header>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+            <nav class="navbar navbar-expand-lg navbar-dark site-nav">
                 <div class="container">
                     <a class="navbar-brand" href="{% url 'home' %}">PlantPal</a>
                     <button
@@ -97,8 +97,10 @@
             {% endfor %} {% endif %} {% block content %}{% endblock %}
         </main>
 
-        <footer class="container py-3">
-            <p>PlantPal — track care, keep plants alive.</p>
+        <footer class="site-footer">
+            <div class="container">
+                <p>PlantPal — track care, keep plants alive.</p>
+            </div>
         </footer>
 
         <script

@@ -2,6 +2,10 @@
   --bs-font-sans-serif: "Nunito", system-ui, -apple-system, "Segoe UI",
     Roboto, "Helvetica Neue", Arial, sans-serif;
   --bs-body-font-family: var(--bs-font-sans-serif);
+
+  --pp-brand: #198754;
+  --pp-brand-text: #ffffff;
+  --pp-page-bg: #9bc7a9;
 }
 
 body {
@@ -11,4 +15,26 @@ body {
 
 .navbar-brand {
     font-weight: 700;
+}
+
+.site-nav,
+.site-footer {
+    background-color: var(--pp-brand);
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.site-footer {
+    margin-top: auto;
+    padding: 1rem 0;
+    color: var(--pp-brand-text);
+}
+
+.site-footer p {
+    margin: 0;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.15rem;
 }
