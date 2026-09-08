@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Page not found — PlantPal{% endblock %}
+
+{% block content %}
+<h1>Page not found</h1>
+<p>That page does not exist or you do not have access to it.</p>
+<p>
+    <a class="btn btn-success" href="{% url 'home' %}">Back to PlantPal</a>
+</p>
+{% endblock %}

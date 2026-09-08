@@ -27,3 +27,5 @@ urlpatterns = [
     path('', plant_views.home, name='home'),
     path('', include('plants.urls')),
 ]
+
+handler404 = 'plants.views.custom_404'
