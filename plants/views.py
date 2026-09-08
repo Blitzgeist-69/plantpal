@@ -6,6 +6,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from .models import Plant
 from .forms import PlantForm, CareLogForm
 from django.utils import timezone
+from django.db.models import Q
 
 
 def home(request):
@@ -35,7 +36,7 @@ def register(request):
 
 @login_required
 def dashboard(request):
-    """ 
+    """
     Split user's plants into due/overdue and up to date based
     on watering schedule.
     """
@@ -60,9 +61,24 @@ def dashboard(request):
 
 @login_required
 def plant_list(request):
-    """List of plants for the logged-in user."""
-    plants = Plant.objects.filter(user=request.user).order_by('nickname')
-    return render(request, 'plants/plant_list.html', {'plants': plants})
+    """List of plants for the logged-in user. Searchable. """
+    plants = Plant.objects.filter(user=request.user)
+    query = request.GET.get('q', '').strip()
+    if query:
+        plants = plants.filter(
+            Q(nickname__icontains=query)
+            | Q(species__icontains=query)
+            | Q(location__icontains=query)
+        )
+    plants = plants.order_by('nickname')
+    return render(
+        request,
+        'plants/plant_list.html',
+        {
+            'plants': plants,
+            'query': query,
+        },
+    )
 
 
 @login_required

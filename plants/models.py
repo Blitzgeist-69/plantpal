@@ -69,7 +69,8 @@ class Plant(models.Model):
 
     def due_date(self):
         """
-        Date watering is next due or if never watered due today - needs attention.
+        Date watering is next due or if never watered due today - needs
+        attention.
         """
         last = self.last_watered_date()
         if last is None:

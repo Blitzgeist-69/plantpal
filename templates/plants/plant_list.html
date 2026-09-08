@@ -5,6 +5,19 @@
 {% block content %}
 <h1>My Plants</h1>
 
+<form method="get" class="row g-2 mb-4" role="search">
+    <div class="col-sm-8 col-md-6">
+        <label for="plant-search" class="form-label">Search your plants</label>
+        <input id="plant-search" class="form-control" type="search" name="q" value="{{ query }}" placeholder="Search by Nickname, species or location">
+    </div>
+    <div class="col-sm-4 col-md-6 d-flex align-items-end">
+        <button type="submit" class="btn btn-success me-2">Search</button>
+        {% if query %}
+            <a class="btn btn-outline-secondary" href="{% url 'plants:plant_list' %}">Clear</a>
+        {% endif %}
+    </div>
+</form>
+
 {% if plants %}
     <p>{{ plants|length }} Plant{{ plants|length|pluralize }}.</p>
     <div class="row g-3">
@@ -27,6 +40,8 @@
             </div>
         {% endfor %}
     </div>
+{% elif query %}
+    <p>No plants match "{{ query }}".</p>
 {% else %}
     <p>You don't have any plants yet.</p>
     <p>
