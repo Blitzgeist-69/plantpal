@@ -3,7 +3,7 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect, render, get_object_or_404
-from .models import Plant, CareLog
+from .models import Plant
 from .forms import PlantForm, CareLogForm
 from django.utils import timezone
 
@@ -35,8 +35,26 @@ def register(request):
 
 @login_required
 def dashboard(request):
-    """Logged-in home. Plant lists will be added later."""
-    return render(request, 'plants/dashboard.html')
+    """ Split user's plants into due/overdue and up to date based
+    on watering schedule.
+    """
+    plants = Plant.objects.filter(
+        user=request.user,
+    ).prefetch_related('care_logs')
+
+    needs_attention = []
+    doing_fine = []
+    for plant in plants:
+        if plant.needs_attention():
+            needs_attention.append(plant)
+        else:
+            doing_fine.append(plant)
+
+    context = {
+        'needs_attention': needs_attention,
+        'doing_fine': doing_fine,
+    }
+    return render(request, 'plants/dashboard.html', context)
 
 
 @login_required

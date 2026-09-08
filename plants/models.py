@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.utils import timezone
+from datetime import timedelta
 
 
 # Create your models here.
@@ -57,6 +59,26 @@ class Plant(models.Model):
 
     def get_absolute_url(self):
         return reverse('plants:plant_detail', args=[self.pk])
+
+    def last_care_date(self):
+        """Most recent care log date, or None if no logs exist."""
+        latest = self.care_logs.first()
+        if latest is None:
+            return None
+        return latest.date
+
+    def due_date(self):
+        """
+        Date plant care is next due, plants with no history are due today.
+        """
+        last = self.last_care_date()
+        if last is None:
+            return timezone.localdate()
+        return last + timedelta(days=self.water_frequency_days)
+
+    def needs_attention(self):
+        """ Return True if the plant is due for care today or earlier. """
+        return self.due_date() <= timezone.localdate()
 
 
 class CareLog(models.Model):

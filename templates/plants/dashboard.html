@@ -4,5 +4,42 @@
 
 {% block content %}
 <h1>Dashboard</h1>
-<p>You are logged in. Plant lists will appear here once you add some.</p>
+
+{% if not needs_attention and not doing_fine %}
+    <p>You are logged in. Plant lists will appear here once you add some.</p>
+    <p>
+        <a class="btn btn-success" href="{% url 'plants:plant_create' %}">Add Plant</a>
+    </p>
+{% else %}
+    <h2>Needs Attention</h2>
+        {% if needs_attention %}
+            <ul>
+                {% for plant in needs_attention %}
+                    <li>
+                        <a href="{{ plant.get_absolute_url }}">{{ plant.nickname }}</a>
+                        — {{ plant.species }}
+                        — due {{ plant.due_date }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Nothing due today. Good work!</p>
+        {% endif %}
+
+        <h2>Doing fine</h2>
+        {% if doing_fine %}
+            <ul>
+                {% for plant in doing_fine %}
+                    <li>
+                        <a href="{{ plant.get_absolute_url }}">{{ plant.nickname }}</a>
+                        — {{ plant.species }}
+                        — next due {{ plant.due_date }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No plants in this list.</p>
+        {% endif %}
+        
+{% endif %}
 {% endblock %}
