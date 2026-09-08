@@ -274,7 +274,9 @@ Purpose: Prevent accidental CASCADE deletes.
 | Surface | *off-white* | Page background |
 | Text | *near-black* | Body copy |
 | Danger | *warm red* | Delete confirm |
-| Font | *Google Font* | Headings and body |
+| Font | *Google Font - Nunito* | Headings and body |
+
+The Nunito font was chosen as its rounded nature felt organic and in keeping with a plant care application.
 
 ## User Stories
 
@@ -392,7 +394,7 @@ PlantPal uses Django’s built-in `User` plus two project models. Care history i
 
 * Bootstrap 5.3.8
 * Font Awesome - icons
-* Google Fonts
+* Google Fonts - Nunito
 
 
 ## Deployment

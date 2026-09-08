@@ -1,4 +1,11 @@
+:root {
+  --bs-font-sans-serif: "Nunito", system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+  --bs-body-font-family: var(--bs-font-sans-serif);
+}
+
 body {
+    font-family: var(--bs-body-font-family);
     background-color: #9bc7a9;
 }
 
