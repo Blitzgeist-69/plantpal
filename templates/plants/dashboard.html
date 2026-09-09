@@ -1,45 +1,36 @@
-{% extends "base.html" %}
-
-{% block title %}Dashboard — PlantPal{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %}Dashboard — PlantPal{% endblock %} {% block content %}
 <h1>Dashboard</h1>
 
 {% if not needs_attention and not doing_fine %}
-    <p>You are logged in. Plant lists will appear here once you add some.</p>
-    <p>
-        <a class="btn btn-success" href="{% url 'plants:plant_create' %}">Add Plant</a>
-    </p>
+<p>You are logged in. Plant lists will appear here once you add some.</p>
+<p>
+    <a class="btn btn-success" href="{% url 'plants:plant_create' %}">Add Plant</a>
+</p>
 {% else %}
-    <h2>Needs Attention</h2>
-        {% if needs_attention %}
-            <ul class="list-group mb-4">
-                {% for plant in needs_attention %}
-                    <li class="list-group-item">
-                        <a href="{{ plant.get_absolute_url }}">{{ plant.nickname }}</a>
-                        — {{ plant.species }}
-                        — watering due {{ plant.due_date }}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No watering due today. Good work!</p>
-        {% endif %}
-
-        <h2>Doing fine ({{ doing_fine|length }})</h2>
-        {% if doing_fine %}
-            <ul class="list-group">
-                {% for plant in doing_fine %}
-                    <li class="list-group-item">
-                        <a href="{{ plant.get_absolute_url }}">{{ plant.nickname }}</a>
-                        — {{ plant.species }}
-                        — next watering {{ plant.due_date }}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No plants in this list.</p>
-        {% endif %}
-
+<h2>Needs Attention</h2>
+{% if needs_attention %}
+<ul class="list-group plant-list plant-list-due">
+    {% for plant in needs_attention %}
+    <li class="list-group-item">
+        <a href="{{ plant.get_absolute_url }}">{{ plant.nickname }}</a>
+        — {{ plant.species }} — watering due {{ plant.due_date }}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No watering due today. Good work!</p>
 {% endif %}
-{% endblock %}
+
+<h2>Doing fine ({{ doing_fine|length }})</h2>
+{% if doing_fine %}
+<ul class="list-group plant-list plant-list-ok">
+    {% for plant in doing_fine %}
+    <li class="list-group-item">
+        <a href="{{ plant.get_absolute_url }}">{{ plant.nickname }}</a>
+        — {{ plant.species }} — next watering {{ plant.due_date }}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No plants in this list.</p>
+{% endif %} {% endif %} {% endblock %}

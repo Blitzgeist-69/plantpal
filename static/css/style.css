@@ -1,11 +1,12 @@
 :root {
-  --bs-font-sans-serif: "Nunito", system-ui, -apple-system, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif;
-  --bs-body-font-family: var(--bs-font-sans-serif);
+    --bs-font-sans-serif: "Nunito", system-ui, -apple-system, "Segoe UI",
+        Roboto, "Helvetica Neue", Arial, sans-serif;
+    --bs-body-font-family: var(--bs-font-sans-serif);
 
-  --pp-brand: #198754;
-  --pp-brand-text: #ffffff;
-  --pp-page-bg: #9bc7a9;
+    --pp-brand: #198754;
+    --pp-brand-text: #ffffff;
+    --pp-page-bg: #9bc7a9;
+    --pp-danger: #c0392b;
 }
 
 body {
@@ -22,6 +23,10 @@ header {
     z-index: 1030;
 }
 
+main {
+    flex: 1 0 auto;
+}
+
 .navbar-brand {
     font-weight: 700;
 }
@@ -29,10 +34,6 @@ header {
 .site-nav,
 .site-footer {
     background-color: var(--pp-brand);
-}
-
-main {
-    flex: 1 0 auto;
 }
 
 .site-footer {
@@ -46,4 +47,124 @@ main {
     text-align: center;
     font-weight: 700;
     font-size: 1.15rem;
+}
+
+.hero {
+    padding: 2rem 0;
+    text-align: center;
+}
+
+.hero h1 {
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.hero p {
+    max-width: 36rem;
+    margin: 0 auto 1.25rem;
+}
+
+.feature-card {
+    text-align: center;
+    border: none;
+    box-shadow: 0 0.25rem 0.75rem rgba(25, 135, 84, 0.12);
+}
+
+.feature-card h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--pp-brand);
+}
+
+.pp-form {
+    max-width: 32rem;
+}
+
+.pp-form p label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.pp-form p input,
+.pp-form p select,
+.pp-form p textarea {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+}
+
+.auth-page {
+    text-align: center;
+}
+
+.auth-page .pp-form {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+.plant-list {
+    margin-bottom: 1.5rem;
+}
+
+.plant-list-due .list-group-item {
+    border-left: 4px solid var(--pp-danger);
+}
+
+.plant-list-ok .list-group-item {
+    border-left: 4px solid var(--pp-brand);
+}
+
+.plant-card .card-title a {
+    color: var(--pp-brand);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.plant-card .card-title a:hover,
+.plant-card .card-title a:focus {
+    text-decoration: underline;
+}
+
+dl {
+    max-width: 32rem;
+}
+
+dt {
+    font-weight: 700;
+    margin-top: 0.75rem;
+}
+
+dd {
+    margin-left: 0;
+}
+
+.btn:not(.btn-sm) {
+    min-height: 2.5rem;
+}
+
+.btn-success {
+    background-color: var(--pp-brand);
+    border-color: var(--pp-brand);
+}
+
+.btn-success:hover,
+.btn-success:focus {
+    background-color: #157347;
+    border-color: #157347;
+}
+
+.btn-outline-success {
+    color: var(--pp-brand);
+    border-color: var(--pp-brand);
+}
+
+.btn-outline-success:hover,
+.btn-outline-success:focus {
+    color: var(--pp-brand-text);
+    background-color: var(--pp-brand);
+    border-color: var(--pp-brand);
 }

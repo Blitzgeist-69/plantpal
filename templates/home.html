@@ -1,13 +1,10 @@
-{% extends "base.html" %}
-
-{% block title %}PlantPal - keep plants alive{% endblock %}
-
+{% extends "base.html" %} {% block title %}PlantPal - keep plants alive{% endblock %} 
 {% block content %}
-<section class="py-4 text-center">
+<section class="hero">
     <h1>Stop guessing when it's time to water your plants</h1>
     <p>
-        PlantPal remembers each plant's watering rhythm and care history
-        and tells you what needs attention today.
+        PlantPal remembers each plant's watering rhythm and care history and tells you what needs
+        attention today.
     </p>
     <a class="btn btn-success me-2" href="{% url 'register' %}">Create an account</a>
     <a class="btn btn-outline-success" href="{% url 'login' %}">Log in</a>
@@ -15,26 +12,26 @@
 
 <section class="row g-3">
     <div class="col-md-4">
-        <article class="card h-100 text-center">
+        <article class="card feature-card">
             <div class="card-body">
-                <h2 class="h5">Track plants</h2>
-                <p class="text-muted mb-0">Nickname, species, room, schedule</p>
+                <h2>Track plants</h2>
+                <p>Nickname, species, room, schedule</p>
             </div>
         </article>
     </div>
     <div class="col-md-4">
-        <article class="card h-100 text-center">
+        <article class="card feature-card">
             <div class="card-body">
-                <h2 class="h5">Log watering</h2>
-                <p class="text-muted mb-0">Date, action, optional notes</p>
+                <h2>Log watering</h2>
+                <p>Date, action, optional notes</p>
             </div>
         </article>
     </div>
     <div class="col-md-4">
-        <article class="card h-100 text-center">
+        <article class="card feature-card">
             <div class="card-body">
-                <h2 class="h5">See what is due</h2>
-                <p class="text-muted mb-0">Dashboard lists plants that need care</p>
+                <h2>See what is due</h2>
+                <p>Dashboard lists plants that need care</p>
             </div>
         </article>
     </div>

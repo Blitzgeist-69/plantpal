@@ -1,51 +1,53 @@
-{% extends "base.html" %}
-
-{% block title %}My Plants — PlantPal{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %}My Plants — PlantPal{% endblock %} {% block content %}
 <h1>My Plants</h1>
 
 <form method="get" class="row g-2 mb-4" role="search">
     <div class="col-sm-8 col-md-6">
         <label for="plant-search" class="form-label">Search your plants</label>
-        <input id="plant-search" class="form-control" type="search" name="q" value="{{ query }}" placeholder="Search by Nickname, species or location">
+        <input
+            id="plant-search"
+            class="form-control"
+            type="search"
+            name="q"
+            value="{{ query }}"
+            placeholder="Search by Nickname, species or location"
+        />
     </div>
     <div class="col-sm-4 col-md-6 d-flex align-items-end">
         <button type="submit" class="btn btn-success me-2">Search</button>
         {% if query %}
-            <a class="btn btn-outline-secondary" href="{% url 'plants:plant_list' %}">Clear</a>
+        <a class="btn btn-outline-secondary" href="{% url 'plants:plant_list' %}">Clear</a>
         {% endif %}
     </div>
 </form>
 
 {% if plants %}
-    <p>{{ plants|length }} Plant{{ plants|length|pluralize }}.</p>
-    <div class="row g-3">
-        {% for plant in plants %}
-            <div class="col-12 col-md-6 col-lg-4">
-                <article class="card h-100">
-                    <div class="card-body">
-                        <h2 class="h5 card-title">
-                            <a href="{{ plant.get_absolute_url }}">{{ plant.nickname }}</a>
-                        </h2>
-                        <p class="card-text">{{ plant.species }}</p>
-                        {% if plant.location %}
-                            <p class="card-text"><strong>Location:</strong> {{ plant.location }}</p>
-                        {% endif %}
-                        <p class="card-text">
-                            <small>Water every {{ plant.water_frequency_days }} days.</small>
-                        </p>
-                    </div>
-                </article>
+<p>{{ plants|length }} Plant{{ plants|length|pluralize }}.</p>
+<div class="row g-3">
+    {% for plant in plants %}
+    <div class="col-12 col-md-6 col-lg-4">
+        <article class="card h-100 plant-card">
+            <div class="card-body">
+                <h2 class="h5 card-title">
+                    <a href="{{ plant.get_absolute_url }}">{{ plant.nickname }}</a>
+                </h2>
+                <p class="card-text">{{ plant.species }}</p>
+                {% if plant.location %}
+                <p class="card-text"><strong>Location:</strong> {{ plant.location }}</p>
+                {% endif %}
+                <p class="card-text">
+                    <small>Water every {{ plant.water_frequency_days }} days.</small>
+                </p>
             </div>
-        {% endfor %}
+        </article>
     </div>
+    {% endfor %}
+</div>
 {% elif query %}
-    <p>No plants match "{{ query }}".</p>
+<p>No plants match "{{ query }}".</p>
 {% else %}
-    <p>You don't have any plants yet.</p>
-    <p>
-        <a class="btn btn-success" href="{% url 'plants:plant_create' %}">Add plant</a>
-    </p>
-{% endif %}
-{% endblock %}
+<p>You don't have any plants yet.</p>
+<p>
+    <a class="btn btn-success" href="{% url 'plants:plant_create' %}">Add plant</a>
+</p>
+{% endif %} {% endblock %}
