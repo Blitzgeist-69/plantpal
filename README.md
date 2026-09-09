@@ -45,7 +45,7 @@ Key Features:
 * Dashboard that splits plants into “Needs attention” and “Doing fine”
 * Owner isolation so one user cannot view or change another user’s plants
 * Responsive layout for mobile, tablet and desktop
-* Optional plant photographs stored on Cloudinary
+* Optional plant photographs stored on Cloudinary - not in v1 due to time contraints
 
 The project was developed using Python, Django, HTML5, CSS3 (with Bootstrap 5), and a small amount of third-party JavaScript from Bootstrap. Data is stored in Postgres (Code Institute database) in production, with SQLite available for locally if needed for testing. The application is deployed on Heroku with WhiteNoise serving static files.
 
@@ -117,7 +117,6 @@ These features were deemed out of scope due to time constraints and the need to 
 **Known Limitations**
 
 * “Needs attention” is based on the most recent care log date plus `water_frequency_days`. It does not distinguish watering from other actions unless that logic is tightened later.
-* Photographs depend on Cloudinary being configured. Plants can be saved without an image.
 * Heroku’s filesystem is ephemeral. User uploads must not be stored on the dyno.
 * The first version does not send email, so a forgotten password flow is not included.
 
@@ -191,7 +190,7 @@ Purpose: Answer “what should I do today?”
 * Title Today’s care and a count (“You are tracking 4 plants”).
 * Block 1, first: Needs attention (due, overdue, or never logged). Each row is the plant name (link) + short reason.
 * Block 2: Doing fine with next due date.
-* Empty states: “Nothing is due.” and “Add your first plant.”
+* Empty states: “Nothing is due.” and “Add plant.”
 
 #### My plants
 
@@ -323,7 +322,7 @@ PlantPal uses Django’s built-in `User` plus two project models. Care history i
 
 * Owner data lives once on `User`.
 * Repeating “last watered” only on `Plant` would lose history and make the dashboard guess.
-* `image` is a field (Cloudinary reference).
+* `image` is a field (Cloudinary reference) but unused in v1 due to time contraints.
 * Both foreign keys use `on_delete=CASCADE`: deleting a user removes their plants; deleting a plant removes its logs. The delete confirm page tells the user this.
 
 ![PlantPal ERD Logical Model](readme_images/tables/plantpal_erd_logical_model.png)
@@ -357,7 +356,6 @@ PlantPal uses Django’s built-in `User` plus two project models. Care history i
 * Queries are scoped to `request.user` (or a helper that 404s if the plant is not owned). Guessing another user’s plant URL returns 404, not the record.
 * Passwords are hashed by Django. They are never written to templates or logs on purpose.
 * CSRF protection is left on. Logout uses POST.
-* Uploaded images go to Cloudinary, not the Heroku dyno disk.
 
 ## Technologies Used
 * Balsamiq - Wireframes and Tables
@@ -382,7 +380,6 @@ PlantPal uses Django’s built-in `User` plus two project models. Care history i
 * Chrome DevTools - Testing
 * WAVE / Lighthouse - Testing
 * Favicon.io
-* Cloudinary **TBC**
 * Diffchecker.com
 * Notepad++
 * axe DevTools
@@ -393,7 +390,6 @@ PlantPal uses Django’s built-in `User` plus two project models. Care history i
 ## Code and Media Attribution
 
 * Bootstrap 5.3.8
-* Font Awesome - icons
 * Google Fonts - Nunito
 
 
@@ -406,5 +402,7 @@ A full record of all testing (user story validation, manual testing, HTML/CSS/Py
 
 ## Future Features
 
-**TBC**
+* Add ability for users to add an image for each plant.
+* Prevent future dates when adding a plant or a care log.
+* Add forgotten password flow with email.
 
