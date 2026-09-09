@@ -148,7 +148,8 @@ a:focus {
     color: var(--pp-text);
 }
 
-.pp-form p label {
+.pp-form p label,
+.pp-form .form-label {
     display: block;
     font-weight: 600;
     margin-bottom: 0.25rem;
@@ -157,7 +158,8 @@ a:focus {
 
 .pp-form p input,
 .pp-form p select,
-.pp-form p textarea {
+.pp-form p textarea,
+.pp-form .form-control {
     display: block;
     width: 100%;
     padding: 0.375rem 0.75rem;
@@ -165,6 +167,24 @@ a:focus {
     border-radius: 0.375rem;
     background-color: var(--pp-surface);
     color: var(--pp-text);
+}
+
+.pp-form input[type="date"] {
+    color-scheme: light;
+    min-height: 2.5rem;
+}
+
+.pp-form input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 1;
+    cursor: pointer;
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+@media (prefers-color-scheme: dark) {
+    .pp-form input[type="date"] {
+        color-scheme: dark;
+    }
 }
 
 .auth-page {
@@ -248,10 +268,17 @@ dd {
 }
 
 .btn-danger {
-    background-color: var(--pp-danger);
-    border-color: var(--pp-danger);
+    background-color: #dc3545;
+    border-color: #dc3545;
     color: #ffffff;
     font-weight: 600;
+}
+
+.btn-danger:hover,
+.btn-danger:focus {
+    background-color: #b02a37;
+    border-color: #b02a37;
+    color: #ffffff;
 }
 
 .btn-outline-light {
