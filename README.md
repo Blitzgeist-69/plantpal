@@ -4,13 +4,15 @@
 
 PlantPal is a full-stack web application that helps people look after indoor plants. Users create an account, add each plant they own, record care actions such as watering, and see a dashboard of which plants are due or overdue.
 
-The project is built with Django, a relational Postgres database, custom HTML/CSS with Bootstrap 5, and is deployed on Heroku. Secrets are kept out of version control. Optional plant photographs can be stored on Cloudinary.
+The project is built with Django, a relational Postgres database, custom HTML/CSS with Bootstrap 5, and is deployed on Heroku. Secrets are kept out of version control.
 
 **Hero Image**
 
 ![Hero Image](docs/screenshots/hero-image.png) **TBC**
 
-**Live Site:** [**TBC** Heroku URL here]
+**Live Site:** 
+
+https://plantpal-ic-25eab202cb1a.herokuapp.com/
 
 ## Contents
 
@@ -45,9 +47,8 @@ Key Features:
 * Dashboard that splits plants into “Needs attention” and “Doing fine”
 * Owner isolation so one user cannot view or change another user’s plants
 * Responsive layout for mobile, tablet and desktop
-* Optional plant photographs stored on Cloudinary - not in v1 due to time contraints
 
-The project was developed using Python, Django, HTML5, CSS3 (with Bootstrap 5), and a small amount of third-party JavaScript from Bootstrap. Data is stored in Postgres (Code Institute database) in production, with SQLite available for locally if needed for testing. The application is deployed on Heroku with WhiteNoise serving static files.
+The project was developed using Python, Django, HTML5, CSS3 (with Bootstrap 5), and a small amount of third-party JavaScript from Bootstrap. Data is stored in Postgres (Code Institute database). The application is deployed on Heroku with WhiteNoise serving static files.
 
 This project showcases core back-end and full-stack skills including:
 
@@ -61,7 +62,7 @@ This project showcases core back-end and full-stack skills including:
 
 **Live Site:**
 
-[**TBC** Heroku URL here]
+https://plantpal-ic-25eab202cb1a.herokuapp.com/
 
 **GitHub Repo:**
 
@@ -116,7 +117,6 @@ These features were deemed out of scope due to time constraints and the need to 
 
 **Known Limitations**
 
-* “Needs attention” is based on the most recent care log date plus `water_frequency_days`. It does not distinguish watering from other actions unless that logic is tightened later.
 * Heroku’s filesystem is ephemeral. User uploads must not be stored on the dyno.
 * The first version does not send email, so a forgotten password flow is not included.
 
@@ -154,6 +154,8 @@ PlantPal is a multi-page Django application. Each URL renders a server-side temp
 
 The wireframes were drawn as low-fidelity layouts for the core screens. **Click for full image.**
 
+The live app follows these layouts, except plant photos were not built.
+
 The wireframes show:
 
 #### Home (logged out)
@@ -176,7 +178,7 @@ Purpose: Account access.
 
 * Same nav as Home.
 * Narrow centred column, not full width.
-* Register: username, optional email, password, password confirm, Register.
+* Register: username, password, password confirm, Register.
 * Login: username, password, Log in, plus “New here? Register”.
 * Errors sit above or beside the fields.
 
@@ -237,7 +239,7 @@ Purpose: One form, two modes.
 
 Purpose: Prevent accidental CASCADE deletes.
 
-* Question title: Delete {plant name?}
+* Question title: Delete {plant name}?
 * One sentence consequence: history will go too and this cannot be undone.
 * Yes, delete and Cancel.
 
@@ -322,13 +324,19 @@ PlantPal uses Django’s built-in `User` plus two project models. Care history i
 
 * Owner data lives once on `User`.
 * Repeating “last watered” only on `Plant` would lose history and make the dashboard guess.
-* `image` is a field (Cloudinary reference) but unused in v1 due to time contraints.
+* `image` is a field (Cloudinary reference) but unused in v1 due to time constraints.
 * Both foreign keys use `on_delete=CASCADE`: deleting a user removes their plants; deleting a plant removes its logs. The delete confirm page tells the user this.
 
 ![PlantPal ERD Logical Model](readme_images/tables/plantpal_erd_logical_model.png)
 
+Plant photos were designed but not added to the model in v1 due to time constraints and are therefore future development.
+
 
 ## Data Schema
+
+Last watered date = latest Watered log; due date = that date + water_frequency_days (or today if never watered)
+
+This was changed from the original plan as during development it seemed more logical to only use 'watered' to clear 'needs_attention' that for any care type.
 
 ### USER
 
@@ -350,7 +358,7 @@ PlantPal uses Django’s built-in `User` plus two project models. Care history i
 
 ## Security
 
-* `SECRET_KEY`, `DATABASE_URL` and `CLOUDINARY_URL` live in `env.py` locally and in Heroku Config Vars in production. `env.py` is listed in `.gitignore`.
+* `SECRET_KEY` and `DATABASE_URL` live in `env.py` locally and in Heroku Config Vars in production. `env.py` is listed in `.gitignore`.
 * Production `DEBUG` is `False`.
 * Plant and care views require login.
 * Queries are scoped to `request.user` (or a helper that 404s if the plant is not owned). Guessing another user’s plant URL returns 404, not the record.
@@ -362,7 +370,7 @@ PlantPal uses Django’s built-in `User` plus two project models. Care history i
 * Heroku CLI
 * Python 3.12.10
 * Pylance
-* Django 4.2.3
+* Django 4.2.30
 * Django authentication (`User`, login / logout views)
 * Postgres (Code Institute `dbs.ci-dbs.net`)
 * dj-database-url
@@ -390,10 +398,124 @@ PlantPal uses Django’s built-in `User` plus two project models. Care history i
 ## Code and Media Attribution
 
 * Bootstrap 5.3.8
+* Bootstrap JS
 * Google Fonts - Nunito
-
+* Favicon.io
+* Django Authentication
+* dj-database-url
+* gunicorn
+* WhiteNoise
+* Code Institute Postgres
 
 ## Deployment
+
+PlantPal is built with Django and hosted on Heroku. Secret values stay out of GitHub. On my computer they go in a local file called `env.py`. On Heroku they go in Config Vars.
+
+**Live site:** 
+
+https://plantpal-ic-25eab202cb1a.herokuapp.com/
+
+**GitHub repository:** 
+
+https://github.com/Blitzgeist-69/plantpal
+
+### Environment variables
+
+`plantpal/settings.py` reads these values from the environment:
+
+| Variable | Local (`env.py`) | Heroku Config Var | What it is for |
+| --- | --- | --- | --- |
+| `SECRET_KEY` | Yes | Yes | Django secret key |
+| `DATABASE_URL` | Yes | Yes | Code Institute Postgres URL |
+| `DEBUG` | `True` | `False` | Debug is only on if this is the text `True`. Anything else, or a missing value, turns debug off |
+
+The current version of the app does not use Cloudinary, so `CLOUDINARY_URL` is not needed.
+
+`env.py` is listed in `.gitignore`, so it is not committed.
+
+### Files Heroku needs
+
+These files are in the project root:
+
+- `Procfile` — `web: gunicorn plantpal.wsgi`
+- `runtime.txt` — `python-3.12.11`
+- `requirements.txt` — includes Django 4.2.30, gunicorn, dj-database-url, psycopg2 and WhiteNoise
+
+`plantpal/settings.py` also has WhiteNoise in `MIDDLEWARE`, `ALLOWED_HOSTS` set to include `.herokuapp.com` and `127.0.0.1`, and `STATIC_ROOT` set to `staticfiles`.
+
+### Local deployment
+
+1. Clone the repository and open the project folder:
+
+`git clone https://github.com/Blitzgeist-69/plantpal.git`
+
+`cd plantpal`
+
+2. Create and activate a virtual environment
+
+`python -m venv .venv`
+
+`.venv\Scripts\activate`
+
+3. Install the packages
+
+`pip install -r requirements.txt`
+
+4. Create `env.py` in the same folder as `manage.py`
+
+`import os`
+
+`os.environ["SECRET_KEY"] = "replace-with-random-key"`
+
+`os.environ["DATABASE_URL"] = "postgres://USER:PASSWORD@HOST:PORT/NAME"`
+
+`os.environ["DEBUG"] = "True"`
+
+Use a random secret key and a Code Institute Postgres URL. A `DATABASE_URL` is required locally because the SQLite settings in `settings.py` are commented out.
+
+5. Apply the migrations
+
+`python manage.py migrate`
+
+6. Create a superuser — only required if Django admin needed.
+
+`python manage.py createsuperuser`
+
+7. Start the development server
+
+`python manage.py runserver`
+
+8. Open http://127.0.0.1:8000/ in the browser
+
+When using `runserver`, Django serves the files in the `static/` folder. WhiteNoise is for Heroku.
+
+**Heroku deployment**
+
+The Heroku app name is `plantpal-ic-25eab202cb1a`.
+
+I deployed from the Heroku dashboard connected to GitHub.
+
+**a.** Log in at https://heroku.com/ and create a new app.
+
+**b.** Open 'Settings' — 'Config Vars' and add:
+
+`SECRET_KEY` — a random key
+
+`DEBUG` — `False`
+
+`DATABASE_URL` — a Code Institute Postgres URL
+
+**c.** Do not set `DEBUG` to `True` on Heroku.
+
+**d.** Open the 'Deploy' tab, choose GitHub, connect the `Blitzgeist-69/plantpal` repository, and deploy the `main` branch.
+
+**e.** Wait for the build to finish. Heroku runs `collectstatic` during the build. WhiteNoise then serves the static files.
+
+**f.** Open 'More' — 'Run console' and run:
+
+`python manage.py migrate`
+
+**g.** Open https://plantpal-ic-25eab202cb1a.herokuapp.com/ and confirm it matches local
 
 
 ## Testing
