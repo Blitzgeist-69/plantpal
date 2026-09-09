@@ -3,15 +3,47 @@
         Roboto, "Helvetica Neue", Arial, sans-serif;
     --bs-body-font-family: var(--bs-font-sans-serif);
 
-    --pp-brand: #198754;
+    --pp-brand: #0f5c38;
+    --pp-brand-hover: #0b472b;
     --pp-brand-text: #ffffff;
-    --pp-page-bg: #9bc7a9;
-    --pp-danger: #c0392b;
+    --pp-page-bg: #eef5f0;
+    --pp-surface: #ffffff;
+    --pp-text: #1a241c;
+    --pp-muted: #3f5346;
+    --pp-danger: #8b2e27;
+    --pp-focus: #0f5c38;
+    --pp-nav-bg: #0f5c38;
+    --pp-nav-text: #ffffff;
+    --pp-input-border: #8a9a8e;
+    --pp-due-border: #e24b43;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --pp-brand: #7ee0a8;
+        --pp-brand-hover: #b6f0cc;
+        --pp-brand-text: #0c1a12;
+        --pp-page-bg: #121a15;
+        --pp-surface: #1c2a21;
+        --pp-text: #e8eee9;
+        --pp-muted: #b4c4b8;
+        --pp-danger: #f0a39c;
+        --pp-focus: #7ee0a8;
+        --pp-nav-bg: #0f5c38;
+        --pp-nav-text: #ffffff;
+        --pp-input-border: #7a8c7e;
+        --pp-due-border: #f0a39c;
+    }
+}
+
+html {
+    color-scheme: light dark;
 }
 
 body {
     font-family: var(--bs-body-font-family);
     background-color: var(--pp-page-bg);
+    color: var(--pp-text);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -27,19 +59,39 @@ main {
     flex: 1 0 auto;
 }
 
+a {
+    color: var(--pp-brand);
+}
+
+a:hover,
+a:focus {
+    color: var(--pp-brand-hover);
+}
+
+:focus-visible {
+    outline: 3px solid var(--pp-focus);
+    outline-offset: 2px;
+}
+
 .navbar-brand {
     font-weight: 700;
 }
 
 .site-nav,
 .site-footer {
-    background-color: var(--pp-brand);
+    background-color: var(--pp-nav-bg);
+    color: var(--pp-nav-text);
+}
+
+.site-nav .navbar-brand,
+.site-nav .nav-link,
+.site-nav .navbar-text {
+    color: var(--pp-nav-text);
 }
 
 .site-footer {
     margin-top: auto;
     padding: 1rem 0;
-    color: var(--pp-brand-text);
 }
 
 .site-footer p {
@@ -47,6 +99,7 @@ main {
     text-align: center;
     font-weight: 700;
     font-size: 1.15rem;
+    color: var(--pp-nav-text);
 }
 
 .hero {
@@ -57,17 +110,30 @@ main {
 .hero h1 {
     font-weight: 700;
     margin-bottom: 0.75rem;
+    color: var(--pp-text);
 }
 
 .hero p {
     max-width: 36rem;
     margin: 0 auto 1.25rem;
+    color: var(--pp-text);
+}
+
+.card,
+.list-group-item {
+    background-color: var(--pp-surface);
+    color: var(--pp-text);
+}
+
+.form-text {
+    color: var(--pp-muted);
 }
 
 .feature-card {
     text-align: center;
     border: none;
-    box-shadow: 0 0.25rem 0.75rem rgba(25, 135, 84, 0.12);
+    box-shadow: 0 0.25rem 0.75rem rgba(15, 92, 56, 0.12);
+    background-color: var(--pp-surface);
 }
 
 .feature-card h2 {
@@ -78,12 +144,15 @@ main {
 
 .pp-form {
     max-width: 32rem;
+    background-color: var(--pp-page-bg);
+    color: var(--pp-text);
 }
 
 .pp-form p label {
     display: block;
     font-weight: 600;
     margin-bottom: 0.25rem;
+    color: var(--pp-text);
 }
 
 .pp-form p input,
@@ -92,12 +161,16 @@ main {
     display: block;
     width: 100%;
     padding: 0.375rem 0.75rem;
-    border: 1px solid #ced4da;
+    border: 1px solid var(--pp-input-border);
     border-radius: 0.375rem;
+    background-color: var(--pp-surface);
+    color: var(--pp-text);
 }
 
 .auth-page {
     text-align: center;
+    color: var(--pp-text);
+    background-color: var(--pp-page-bg);
 }
 
 .auth-page .pp-form {
@@ -111,7 +184,7 @@ main {
 }
 
 .plant-list-due .list-group-item {
-    border-left: 4px solid var(--pp-danger);
+    border-left: 4px solid var(--pp-due-border);
 }
 
 .plant-list-ok .list-group-item {
@@ -126,6 +199,7 @@ main {
 
 .plant-card .card-title a:hover,
 .plant-card .card-title a:focus {
+    color: var(--pp-brand-hover);
     text-decoration: underline;
 }
 
@@ -149,17 +223,21 @@ dd {
 .btn-success {
     background-color: var(--pp-brand);
     border-color: var(--pp-brand);
+    color: var(--pp-brand-text);
+    font-weight: 600;
 }
 
 .btn-success:hover,
 .btn-success:focus {
-    background-color: #157347;
-    border-color: #157347;
+    background-color: var(--pp-brand-hover);
+    border-color: var(--pp-brand-hover);
+    color: var(--pp-brand-text);
 }
 
 .btn-outline-success {
     color: var(--pp-brand);
     border-color: var(--pp-brand);
+    background-color: var(--pp-surface);
 }
 
 .btn-outline-success:hover,
@@ -167,4 +245,16 @@ dd {
     color: var(--pp-brand-text);
     background-color: var(--pp-brand);
     border-color: var(--pp-brand);
+}
+
+.btn-danger {
+    background-color: var(--pp-danger);
+    border-color: var(--pp-danger);
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.btn-outline-light {
+    color: var(--pp-nav-text);
+    border-color: var(--pp-nav-text);
 }
