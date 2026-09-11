@@ -8,7 +8,7 @@ The project is built with Django, a relational Postgres database, custom HTML/CS
 
 **Hero Image**
 
-![Hero Image](docs/screenshots/hero-image.png) **TBC**
+![Hero Image](readme_images/screenshots/hero.png)
 
 **Live Site:** 
 
@@ -42,8 +42,8 @@ Key Features:
 
 * User registration, log in and log out
 * Create, read, update and delete plants owned by the logged-in user
-* Search plants by nickname, species or room
-* Log care actions (water, fertilize, prune, repot, check, other) against a plant
+* Search plants by nickname, species or location
+* Log care actions (water, fertilize, prune, repot, health check, other) against a plant
 * Dashboard that splits plants into “Needs attention” and “Doing fine”
 * Owner isolation so one user cannot view or change another user’s plants
 * Responsive layout for mobile, tablet and desktop
@@ -267,15 +267,14 @@ Purpose: Prevent accidental CASCADE deletes.
 
 **Colour and type**
 
-**TBC final colours, fonts etc here.**
-
 | Token | Value | Use |
 | --- | --- | --- |
-| Primary | *leaf green* | Nav, primary buttons |
-| Surface | *off-white* | Page background |
-| Text | *near-black* | Body copy |
-| Danger | *warm red* | Delete confirm |
-| Font | *Google Font - Nunito* | Headings and body |
+| Primary | Dark leaf green | Navbar, footer, primary buttons, links |
+| Surface | Pale mint | Page background |
+| Cards | White | Cards, list items, form fields |
+| Text | Near-black | Headings and body copy |
+| Danger | Warm red | Delete confirm button |
+| Font | Nunito (Google Fonts) | Headings and body |
 
 The Nunito font was chosen as its rounded nature felt organic and in keeping with a plant care application.
 
@@ -329,7 +328,7 @@ PlantPal uses Django’s built-in `User` plus two project models. Care history i
 
 ![PlantPal ERD Logical Model](readme_images/tables/plantpal_erd_logical_model.png)
 
-Plant photos were designed but not added to the model in v1 due to time constraints and are therefore future development.
+**N.B.** Plant photos were designed but not added to the model in v1 due to time constraints and are therefore future development.
 
 
 ## Data Schema
@@ -386,11 +385,10 @@ This was changed from the original plan as during development it seemed more log
 * W3C CSS Validation Service - Testing
 * pep8ci / flake8 - Testing
 * Chrome DevTools - Testing
-* WAVE / Lighthouse - Testing
+* Lighthouse - Testing
 * Favicon.io
 * Diffchecker.com
 * Notepad++
-* axe DevTools
 * WebAIM Accessibility Contrast checker
 * WAVE Web Accessibility Evaluation tool
 
@@ -409,7 +407,7 @@ This was changed from the original plan as during development it seemed more log
 
 ## Deployment
 
-PlantPal is built with Django and hosted on Heroku. Secret values stay out of GitHub. On my computer they go in a local file called `env.py`. On Heroku they go in Config Vars.
+PlantPal is built with Django and hosted on Heroku. Secret values stay out of GitHub. Locally they go in a local file called `env.py`. On Heroku they go in Config Vars.
 
 **Live site:** 
 
